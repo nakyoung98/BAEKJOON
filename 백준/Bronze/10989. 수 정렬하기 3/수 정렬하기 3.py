@@ -11,4 +11,4 @@ for _ in range(N):
 
 for i in range(10001):
     for _ in range(numbers[i]):
-        print(i)
+        sys.stdout.write(str(i)+"\n")
