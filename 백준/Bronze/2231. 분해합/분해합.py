@@ -1,3 +1,4 @@
+#풀이 : https://jay3925.tistory.com/12
 import sys
 
 number = sys.stdin.readline()[:-1]
