@@ -4,20 +4,20 @@
   const M = +rawInput.shift();
 
   let result = "";
+  const list = new Array(M).fill(0);
 
-  const recurse = (M, list) => {
-    if (M === 0) {
+  const recurse = (m) => {
+    if (m === M) {
       result += list.join(" ") + "\n";
       return;
     }
-
+  
     for (let i = 1; i <= N; i++) {
-      const newList = list.slice();
-      newList.push(i);
-      recurse(M - 1, newList);
+      list[m] = i;
+      recurse(m + 1);
     }
   };
-
-  recurse(M, []);
-
+  
+  recurse(0);
+  
   console.log(result);
