@@ -4,7 +4,7 @@
   const M = +rawInput.shift();
 
   let result = "";
-  const list = new Array(M).fill(0);
+  const list = new Array(M);
 
   const recurse = (m) => {
     if (m === M) {
