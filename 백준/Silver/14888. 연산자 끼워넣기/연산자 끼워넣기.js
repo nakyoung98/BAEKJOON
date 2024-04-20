@@ -43,13 +43,7 @@
     if (ops[3] > 0) {
       const newOp = ops.slice();
       newOp[3] -= 1;
-      if (now < 0 && A[n] < 0) {
-        recurse(n + 1, Math.trunc(-now / -A[n]), newOp);
-      } else if (now < 0 || A[n] < 0) {
-        recurse(n + 1, -Math.trunc(Math.abs(now) / Math.abs(A[n])), newOp);
-      } else {
-        recurse(n + 1, Math.trunc(now / A[n]), newOp);
-      }
+      recurse(n + 1, Math.trunc(now / A[n]), newOp);
     }
   };
 
