@@ -3,6 +3,7 @@
   const K = +rawInput.shift();
   const Arrows = rawInput.shift().split(/ /g);
   const Numbers = new Array(K + 1);
+  const Visits = new Array(K + 1).fill(false);
 
   let min = Infinity;
   let max = -Infinity;
@@ -25,17 +26,23 @@
     }
 
     for (let n = 0; n < 10; n++) {
+      if (Visits[n]) continue;
+
       switch (Arrows[k]) {
         case "<":
           if (Numbers[k] < n) {
+            Visits[n] = true;
             Numbers[k + 1] = n;
             recurse(k + 1);
+            Visits[n] = false;
           }
           break;
         case ">":
           if (Numbers[k] > n) {
+            Visits[n] = true;
             Numbers[k + 1] = n;
             recurse(k + 1);
+            Visits[n] = false;
           }
           break;
       }
