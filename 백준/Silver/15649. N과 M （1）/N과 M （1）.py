@@ -25,7 +25,7 @@ def solution(N, M):
         # [반환부]
         # 마지막 선택이면 결과에 저장하고 return
         if left == 0:
-            print(*selected)
+            print(" ".join(map(str, selected)))
 
             return
 
