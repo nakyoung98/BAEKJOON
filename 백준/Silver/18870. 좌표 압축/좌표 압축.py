@@ -3,35 +3,17 @@ import sys
 N = int(sys.stdin.readline())
 
 
-def buildArray(N):
-    array = list(map(int, sys.stdin.readline().split()))
-    newArray = []
-    for idx, value in enumerate(array):
-        newArray.append([value, idx])
-    return newArray
-
-
 def solution(N):
-    numbersWithIndex = buildArray(N)
-    numbersWithIndex.sort(key=lambda x: x[0])
+    numbers = list(map(int, sys.stdin.readline().split()))
+    # set으로 중복제거, 및 정렬하여 특정 숫자가 가지는 rank 획득
+    uniqueSortedNumbers = sorted(set(numbers))
 
-    lastIdx = -1
-    lastNum = None
-    for i in range(len(numbersWithIndex)):
-        # 이전 숫자랑 다른 숫자면
-        ## 마지막 숫자를 대체
-        ## idx += 1
-        if lastNum != numbersWithIndex[i][0]:
-            lastNum = numbersWithIndex[i][0]
-            lastIdx += 1
+    # 특정 value의 rank값 조회용 dict 생성
+    rankDict = {number: rank for rank, number in enumerate(uniqueSortedNumbers)}
 
-        # idx 값으로 대체
-        numbersWithIndex[i][0] = lastIdx
+    result = [str(rankDict[number]) for number in numbers]
 
-    # 순서 원복
-    numbersWithIndex.sort(key=lambda x: x[1])
-
-    print(" ".join(str(x[0]) for x in numbersWithIndex))
+    print(" ".join(result))
 
 
 solution(N)
