@@ -1,21 +1,22 @@
 import sys
 
-N = int(sys.stdin.readline())
+input = sys.stdin.readline
 
-words = set()
+N = int(input())
 
-for _ in range(N):
-    word = sys.stdin.readline().rstrip()
-    words.add(word)
 
-words = list(words)
+def solution(N):
+    # set: 단어 중복 제거
+    words = set()
+    for _ in range(N):
+        words.add(input().rstrip())
 
-wordList = []
+    # 정렬 조건
+    ## 1. 문자 길이
+    ## 2. 문자 사전순
+    result = sorted(words, key=lambda x: (len(x), x))
 
-for i in range(len(words)):
-    wordList.append((len(words[i]),words[i]))
+    print("\n".join(result))
 
-wordList.sort()
 
-for lenWord, word in wordList:
-    print(word)
+solution(N)
