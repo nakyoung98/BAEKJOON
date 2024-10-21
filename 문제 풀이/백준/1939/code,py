@@ -1,0 +1,63 @@
+import sys
+from collections import deque
+
+input = sys.stdin.readline
+
+
+def solution():
+    islands, bridges = map(int, input().split())
+    visitedIslands = [0] * (islands + 1)
+    bridges_dict = {}
+
+    for _ in range(bridges):  # 다리 정보 저장
+        island1, island2, bridgeWeight = map(int, input().split())
+
+        bridges_dict.setdefault(island1, {})
+        bridges_dict.setdefault(island2, {})
+
+        if island2 not in bridges_dict[island1]:
+            bridges_dict[island1][island2] = bridgeWeight
+            bridges_dict[island2][island1] = bridgeWeight
+        # 현재 등록된 다리 무게와 비교해서 무거운 것만 저장
+        elif bridges_dict[island1][island2]:
+            if bridges_dict[island1][island2] < bridgeWeight:
+                bridges_dict[island1][island2] = bridgeWeight
+                bridges_dict[island2][island1] = bridgeWeight
+
+    fact1, fact2 = map(int, input().split())
+    result = bfs(fact1, fact2, visitedIslands, bridges_dict)
+    print(result)
+
+
+def bfs(start, end, visited, bridges_dict):
+    # 구조: (현위치, 가는 길에 만난 중량 최소값)
+    route = deque([(start, 1000000000)])  # 초기값은 C의 최대값으로 한다.
+    results = 0
+
+    # 해당 island에서 갈 수 있는 모든 섬(dict[island].keys()) 에 방문
+    while route:
+        now, minWeight = route.popleft()
+
+        if now == end:
+            results = max(results, minWeight)
+            continue
+
+        # 안가본 모든 섬에 방문
+        for next, bridgeWeight in bridges_dict[now].items():
+            # 현재 나의 최대중량이 이전에 여기 도달했을 때 최대 중량보다 작다면 더 가는게 의미 없음
+            # 지금까지 온 값과 다음에 지나갈 값 중 최소값만 채택
+            nextWeight = min(minWeight, bridgeWeight)
+
+            if visited[next] >= nextWeight:
+                continue
+            else:
+                visited[next] = nextWeight  # 가본곳으로 표시
+                route.append((next, nextWeight))
+
+            # 가려는 곳이 지금보다 중량제한이 낮으면 갈 가치가 있지만
+            # 높다면 이미 이전 이동에서 더 좋은 조건으로 지나갔다는 의미이므로 계산하지 않는다
+
+    return results
+
+
+solution()
