@@ -6,7 +6,7 @@ sys.setrecursionlimit(10000)
 def solution(nodeinfo):
     for i in range(len(nodeinfo)):
         nodeinfo[i].append(i + 1)
-    sorted_nodeinfo = sorted(nodeinfo, key=lambda point: (-point[1], point[0]))
+    sorted_nodeinfo = sorted(nodeinfo, key=lambda point: -point[1])
 
     # 노드 트리 만들기
     head_node = Node(sorted_nodeinfo[0])
