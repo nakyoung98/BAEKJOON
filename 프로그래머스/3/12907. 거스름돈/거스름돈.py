@@ -1,12 +1,28 @@
+import sys
+sys.setrecursionlimit(10000)
+
+result = 0
+
 def solution(n, money):
-    # dp 배열 초기화
-    dp = [0] * (n + 1)
-    dp[0] = 1  # 0원을 만드는 방법은 1가지 (아무 동전도 사용하지 않는 경우)
+    recursion(n, money, 0)
+    
+    global result
+    return result % 1000000007
 
-    # 각 동전에 대해 반복
-    for coin in money:
-        # 현재 동전으로 만들 수 있는 금액을 업데이트
-        for amount in range(coin, n + 1):
-            dp[amount] += dp[amount - coin]
+def recursion(rest, money, index):
+    global result
+    if index == len(money) - 1:
+        if rest % money[index] == 0:
+            result += 1
+        return
+    if rest == 0:
+        result += 1
+        return
 
-    return dp[n]%1000000007
+
+    cur_coin = money[index]    
+
+    while rest >= 0:
+        recursion(rest, money, index + 1 )
+        rest -= cur_coin
+        
